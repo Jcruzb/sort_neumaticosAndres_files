@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "convert": "node app.js xlsx-to-json",
+    "convert:custom": "node app.js xlsx-to-json --input=./pares_ordenados.xlsx --sheet=\"Pares-ordenados\""
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
 }
