@@ -26,9 +26,13 @@ const fields = (
 
 const outDir = process.env.SPLIT_OUT_DIR || path.resolve("./output/splits");
 
+const rootDir = process.env.MKEXP_ROOT || path.resolve("./output/expedientes");
+
 module.exports = {
   // xlsx-to-json
   input, sheet, output,
   // split & count
   inputJson, fields, outDir,
+  //  mk-expedientes
+  rootDir,
 };

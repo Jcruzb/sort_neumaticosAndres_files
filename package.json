@@ -7,7 +7,8 @@
     "convert": "node app.js xlsx-to-json",
     "split": "node app.js json-split",
     "split:custom": "node app.js json-split --json=./output/pares_ordenados__Pares-ordenados.json --fields=\"RazonSocial,Año,ComunidadAutonoma\" --outDir=./output/splits",
-    "count": "node app.js count-fichas"
+    "count": "node app.js count-fichas",
+    "mkexp": "node app.js mk-expedientes"
   },
   "author": "",
   "license": "ISC",

@@ -23,6 +23,10 @@ json-split:
 
 count-fichas:
   --json=./output/pares_ordenados__Pares-ordenados.json
+
+mk-expedientes:
+  --json=./output/pares_ordenados__Pares-ordenados.json
+  --root=./output/expedientes
 `
   );
 }
@@ -66,12 +70,16 @@ async function run() {
     return;
   }
 
-  // Mezcla args CLI con defaults del config
-  const options = {
-    input: args.input ?? config.input,
-    sheet: args.sheet ?? config.sheet,
-    output: args.out ?? config.output,
-  };
+  let options = {};
+  if (taskName === "xlsx-to-json") {
+    options = { input: args.input ?? config.input, sheet: args.sheet ?? config.sheet, output: args.out ?? config.output };
+  } else if (taskName === "json-split") {
+    options = { inputJson: args.json ?? config.inputJson, fields: args.fields ?? config.fields, outDir: args.outDir ?? config.outDir };
+  } else if (taskName === "count-fichas") {
+    options = { inputJson: args.json ?? config.inputJson };
+  } else if (taskName === "mk-expedientes") {
+    options = { inputJson: args.json ?? config.inputJson, rootDir: args.root ?? config.rootDir };
+  }
 
   try {
     const { message } = await TASKS[taskName](options);
@@ -81,5 +89,6 @@ async function run() {
     process.exitCode = 1;
   }
 }
+
 
 module.exports = { run };
