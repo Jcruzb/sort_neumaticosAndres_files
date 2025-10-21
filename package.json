@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "convert": "node app.js xlsx-to-json",
-    "convert:custom": "node app.js xlsx-to-json --input=./pares_ordenados.xlsx --sheet=\"Pares-ordenados\""
+    "split": "node app.js json-split",
+    "split:custom": "node app.js json-split --json=./output/pares_ordenados__Pares-ordenados.json --fields=\"RazonSocial,Año,ComunidadAutonoma\" --outDir=./output/splits",
+    "count": "node app.js count-fichas"
   },
   "author": "",
   "license": "ISC",
