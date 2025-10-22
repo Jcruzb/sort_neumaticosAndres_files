@@ -28,6 +28,13 @@ const outDir = process.env.SPLIT_OUT_DIR || path.resolve("./output/splits");
 
 const rootDir = process.env.MKEXP_ROOT || path.resolve("./output/expedientes");
 
+// copy-facturas defaults
+const sourceRoot = process.env.COPY_SRC ||
+  // 👉 pon aquí tu ruta de red si quieres dejarla por defecto:
+  "Y:\\INNOVACION\\CLIENTES\\N\\Neumaticos Andres\\NGRANTS\\CAE\\Documentos del cliente\\Facturas por Comunidad Autonoma";
+const dryRun = String(process.env.COPY_DRY || "false").toLowerCase() === "true";
+
+
 module.exports = {
   // xlsx-to-json
   input, sheet, output,
@@ -35,4 +42,6 @@ module.exports = {
   inputJson, fields, outDir,
   //  mk-expedientes
   rootDir,
+  // copy-facturas
+  sourceRoot, dryRun,
 };

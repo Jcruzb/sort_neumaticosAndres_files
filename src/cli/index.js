@@ -1,12 +1,14 @@
-// src/cli/index.js
+// src/cli/index.js (extracto con cambios)
 const logger = require("../utils/logger");
 const { TASKS } = require("../tasks");
 const config = require("../config");
 
 function printHelp() {
+
   const taskList = Object.keys(TASKS).map((k) => `  - ${k}`).join("\n");
   logger.info(
-`Uso: node app.js <tarea> [opciones]
+    `Uso: node app.js <tarea> [opciones]
+  --verbose=true|false
 
 Tareas:
 ${taskList}
@@ -27,27 +29,14 @@ count-fichas:
 mk-expedientes:
   --json=./output/pares_ordenados__Pares-ordenados.json
   --root=./output/expedientes
+
+copy-facturas:
+  --json=./output/pares_ordenados__Pares-ordenados.json
+  --root=./output/expedientes
+  --src="Y:\\INNOVACION\\...\\Facturas por Comunidad Autonoma"
+  --dry=true|false
 `
   );
-}
-
-async function run() {
-  const taskName = process.argv[2];
-  const args = parseArgs(process.argv);
-
-  if (!taskName || !TASKS[taskName]) { printHelp(); process.exitCode = 1; return; }
-
-  let options = {};
-  if (taskName === "xlsx-to-json") {
-    options = { input: args.input ?? config.input, sheet: args.sheet ?? config.sheet, output: args.out ?? config.output };
-  } else if (taskName === "json-split") {
-    options = { inputJson: args.json ?? config.inputJson, fields: args.fields ?? config.fields, outDir: args.outDir ?? config.outDir };
-  } else if (taskName === "count-fichas") {
-    options = { inputJson: args.json ?? config.inputJson };
-  }
-
-  const { message } = await TASKS[taskName](options);
-  logger.success(message);
 }
 
 function parseArgs(argv) {
@@ -64,11 +53,7 @@ async function run() {
   const taskName = process.argv[2];
   const args = parseArgs(process.argv);
 
-  if (!taskName || !TASKS[taskName]) {
-    printHelp();
-    process.exitCode = 1;
-    return;
-  }
+  if (!taskName || !TASKS[taskName]) { printHelp(); process.exitCode = 1; return; }
 
   let options = {};
   if (taskName === "xlsx-to-json") {
@@ -79,6 +64,14 @@ async function run() {
     options = { inputJson: args.json ?? config.inputJson };
   } else if (taskName === "mk-expedientes") {
     options = { inputJson: args.json ?? config.inputJson, rootDir: args.root ?? config.rootDir };
+  } else if (taskName === "copy-facturas") {
+    options = {
+      inputJson: args.json ?? config.inputJson,
+      rootDir: args.root ?? config.rootDir,
+      sourceRoot: args.src ?? config.sourceRoot,
+      dryRun: typeof args.dry === "string" ? args.dry.toLowerCase() === "true" : config.dryRun,
+      verbose: typeof args.verbose === "string" ? args.verbose.toLowerCase() === "true" : false,
+    };
   }
 
   try {
@@ -89,6 +82,5 @@ async function run() {
     process.exitCode = 1;
   }
 }
-
 
 module.exports = { run };

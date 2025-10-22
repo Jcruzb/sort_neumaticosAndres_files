@@ -8,12 +8,14 @@
     "split": "node app.js json-split",
     "split:custom": "node app.js json-split --json=./output/pares_ordenados__Pares-ordenados.json --fields=\"RazonSocial,Año,ComunidadAutonoma\" --outDir=./output/splits",
     "count": "node app.js count-fichas",
-    "mkexp": "node app.js mk-expedientes"
+    "mkexp": "node app.js mk-expedientes",
+    "copy": "node app.js copy-facturas"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "chalk": "^4.1.2",
     "xlsx": "^0.18.5"
   }
 }
